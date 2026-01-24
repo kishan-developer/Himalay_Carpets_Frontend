@@ -33,6 +33,7 @@ const productApis = {
         );
         return res?.data?.data;
     },
+
     updateProduct: async (productData, productId) => {
         const res = await axiosInstance.put(
             productEndpoints.updateProduct(productId),
@@ -40,6 +41,7 @@ const productApis = {
         );
         return res?.data?.data;
     },
+
     deleteProduct: async (productId) => {
         const res = await axiosInstance.delete(
             productEndpoints.deleteProduct(productId)

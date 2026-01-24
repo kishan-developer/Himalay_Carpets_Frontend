@@ -28,6 +28,7 @@ function SignUp() {
 
     // Handle form submission and redirect to OTP page
     const onSubmit = async (userdata) => {
+        alert("onSubmit click")
         console.log(userdata);
         const toastId = toast.loading("Please wait...");
         

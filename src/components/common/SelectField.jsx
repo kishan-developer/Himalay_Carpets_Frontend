@@ -49,7 +49,7 @@ const SelectField = ({
                 defaultValue={value}
                 disabled={readOnly}
             >
-                <option value="" disabled hidden></option>
+                <option className="" value="" disabled hidden></option>
                 {options.map((opt) => (
                     <option
                         key={opt.value}

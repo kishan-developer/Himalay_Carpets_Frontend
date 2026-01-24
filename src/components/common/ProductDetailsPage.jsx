@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Package } from "lucide-react";
+import { AlertTriangle, Package } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../utils/apiConnector";
 import ProductImageGallery from "./product details/ProductImageGallery";
@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCart } from "../../redux/slices/cartSlice";
 import toast from "react-hot-toast";
 import slugify from "slugify";
+
 import { useEffect, useRef } from "react";
 // Loading Skeleton component
 const ProductDetailsSkeleton = () => (
@@ -38,17 +39,22 @@ const ProductDetailsSkeleton = () => (
 
 // Breadcrumb Navigation
 const Breadcrumb = ({ product }) => (
+
+   
+
     <nav className="hidden sm:flex text-sm space-x-2 text-foreground mb-6 capitalize">
         <Link to="/">Home</Link>
+       
+        
         <span>/</span>
-        <Link
-            to={`/products/${slugify(product.category.name, { lower: true })}/${product.category._id
+        {/* <Link
+            to={`/products/${slugify(product?.name, { lower: true })}/${product?.category?._id
                 }`}
         >
-            {product.category.name}
-        </Link>
-        <span>/</span>
-        <span className="font-medium">{product.name}</span>
+            {product?.category}
+        </Link> */}
+        {/* <span>/</span> */}
+        <span className="font-medium">{product?.name}</span>
     </nav>
 );
 
@@ -135,7 +141,7 @@ function ProductDetailsPage() {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-4">
                         <ProductImageGallery
                             images={product.images}
-                            productName={product.name}
+                            productName={product?.name}
                             stock={product.stock}
                         />
                         <ProductInfo
@@ -155,7 +161,7 @@ function ProductDetailsPage() {
                 {isZoomed && (
                     <ZoomModal
                         image={zoomedImage}
-                        name={product.name}
+                        name={product?.name}
                         onClose={() => setIsZoomed(false)}
                     />
                 )}

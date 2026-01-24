@@ -4,15 +4,24 @@ import { X } from "lucide-react";
 const GalleryPage = () => {
     // Replace with your API/DB images
     const images = [
-        "https://picsum.photos/500/700?random=1",
-        "https://picsum.photos/500/600?random=2",
-        "https://picsum.photos/500/800?random=3",
-        "https://picsum.photos/500/750?random=4",
-        "https://picsum.photos/500/650?random=5",
-        "https://picsum.photos/500/720?random=6",
-        "https://picsum.photos/500/680?random=7",
-        "https://picsum.photos/500/770?random=8",
-        "https://picsum.photos/500/810?random=9",
+        "/NS9607.jpg",
+        "/NS9621.jpg",
+        "/NS9629.jpg",
+        "/NS9632.jpg",
+        "/NS9634.jpg",
+        "/NS9636.jpg",
+        "/NS9641.jpg",
+        "/3168.jpg"
+        
+        // "https://picsum.photos/500/700?random=1",
+        // "https://picsum.photos/500/600?random=2",
+        // "https://picsum.photos/500/800?random=3",
+        // "https://picsum.photos/500/750?random=4",
+        // "https://picsum.photos/500/650?random=5",
+        // "https://picsum.photos/500/720?random=6",
+        // "https://picsum.photos/500/680?random=7",
+        // "https://picsum.photos/500/770?random=8",
+        // "https://picsum.photos/500/810?random=9",
     ];
 
     const [selectedImage, setSelectedImage] = useState(null);

@@ -3,13 +3,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import SidebarFilter from "../../../components/common/SidebarFilter";
 import { Star, Filter, Grid, List, ChevronDown } from "lucide-react";
 import ProductCard from "./ProductCard";
-// Removed: import { Img } from 'react-image';
-
 // Memoized ProductImage component for lazy loading
-
-
-
-
 
 function CategoryPage() {
     const { id, category, fabric } = useParams();
@@ -149,7 +143,7 @@ function CategoryPage() {
                     <div className="max-w-7xl mx-auto">
                         <div className="text-center space-y-4">
                             <h1 className="text-3xl md:text-4xl font-medium text-foreground capitalize tracking-tight">
-                                {categoryDetails?.name.replace(/-/g, " ") ||
+                                {categoryDetails?.name?.replace(/-/g, " ") ||
                                     displayCategory.replace(/-/g, " ")}
                             </h1>
                             <p className="text-lg text-foreground max-w-2xl mx-auto leading-relaxed px-4  text-center sm:text-center ">
@@ -286,9 +280,7 @@ export default CategoryPage;
 const ProductGrid = React.memo(({ products, viewMode, navigate }) => {
 
 
-
     if (!products || products.length === 0) return null;
-
 
     return (
         <div className={`grid px-4  gap-6  ${viewMode === "grid"

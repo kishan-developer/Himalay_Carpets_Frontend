@@ -20,6 +20,7 @@ function AddCategory() {
     } = useForm();
 
     const onSubmit = handleSubmit(async (data) => {
+        console.log("data", data)
         const toastId = toast.loading("Please Wait...");
 
         try {

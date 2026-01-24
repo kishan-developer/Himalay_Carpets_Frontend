@@ -27,14 +27,30 @@ const AddProduct = () => {
     const fabrics = useSelector((s) => s.fabrics);
     const [imageFiles, setImageFiles] = useState([]);
     const [imagePreviews, setImagePreviews] = useState([]);
+
+    const [modalOpen, setModalOpen] = useState(false);
+    const [currentImage, setCurrentImage] = useState(null);
+
+    const openModal = (src) => {
+        setCurrentImage(src);
+        setModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setCurrentImage(null);
+        setModalOpen(false);
+    };
+
     const dispatch = useDispatch();
-    // Fetch Fabrics  on First load
+    // Fetch Fabrics On First load
 
     // Handle file input and generate preview
     const handleImageUpload = (e) => {
         const files = Array.from(e.target.files);
+        console.log("files", files)
         setImageFiles(files);
         const previews = files.map((file) => URL.createObjectURL(file));
+        console.log("previews", previews)
         setImagePreviews(previews);
     };
 
@@ -56,17 +72,34 @@ const AddProduct = () => {
             return;
         }
 
+        let totalSize = 0;
+        imageFiles.forEach(file => {
+            // totalSize += file.size;
+            console.log("files Size", file.size)
+        });
+
+        if (totalSize > 50 * 1024 * 1024) { // 50MB total limit example
+            toast.error("Total image size cannot exceed 50MB.");
+            return;
+        }
+
         const toastId = toast.loading("Please wait...");
 
         try {
             const information = {
                 type: "products",
-                identifier: data.productId || data.name,
+                identifier:
+                    data.productId ||
+                    (data.name ? data.name.trim().replace(/\s+/g, "-") : null) ||
+                    "product",
             };
 
             const imagesUrls = await uploadMedia(imageFiles, information);
 
+            // console.log("imagesUrls", imagesUrls)
+
             if (!imagesUrls) return;
+
             data.images = imagesUrls;
 
             const products = await productApis.createProduct(data);
@@ -90,35 +123,30 @@ const AddProduct = () => {
         navigate(-1);
     };
 
-
-
-
-
     const textureOptions = [
         { value: "Soft", label: "Soft" },
         { value: "Medium", label: "Medium" },
         { value: "Rough", label: "Rough" },
     ];
 
-
+    
     const styleOptions = [
-
-
-        { value: "Modern", label: "Modern" },
-        { value: "Persian", label: "Persian" },
-        { value: "Traditional", label: "Traditional" },
-        { value: "Contemporary", label: "Contemporary" },
-
+        { value: "rectangle", label: "Rectangle" },
+        { value: "square", label: "Square" },
 
     ];
 
     // Example size options; you may also choose free text
     const sizeOptions = [
-        { value: "3x5 ft", label: "3x5 ft" },
+        
+        { value: "1.5x2 ft", label: "1.5x2 ft" },
+        { value: "2x3 ft", label: "2x3 ft" },
+        { value: "2.5x4 ft", label: "2.5x4 ft" },
         { value: "4x6 ft", label: "4x6 ft" },
         { value: "5x8 ft", label: "5x8 ft" },
         { value: "6x9 ft", label: "6x9 ft" },
         { value: "8x10 ft", label: "8x10 ft" },
+        { value: "8x11 ft", label: "8x11 ft" },
         { value: 'others', label: "others" }
     ];
 
@@ -152,8 +180,6 @@ const AddProduct = () => {
 
                 {/* Price & Price per sqft */}
 
-
-
                 {/* Price */}
                 <InputField
                     label="Price"
@@ -166,8 +192,6 @@ const AddProduct = () => {
                         min: { value: 0, message: "Must be positive" },
                     }}
                 />
-
-
 
                 <InputField
                     label="Stock"
@@ -214,6 +238,7 @@ const AddProduct = () => {
                                         src={src}
                                         alt={`Preview ${i}`}
                                         className="w-full h-full object-cover rounded-md"
+                                        onClick={() => openModal(src)} // open modal on click
                                     />
                                     <button
                                         type="button"
@@ -226,71 +251,113 @@ const AddProduct = () => {
                             ))}
                         </div>
                     )}
+
+                    {/* Modal */}
+                    {modalOpen && (
+                        <div
+                            className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+                            onClick={closeModal} // close when clicking outside
+                        >
+                            <div
+                                className="relative bg-white rounded-md p-2 max-w-3xl max-h-[90vh]"
+                                onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
+                            >
+                                <button
+                                    type="button"
+                                    onClick={closeModal}
+                                    className="absolute top-2 right-2 bg-gray-100 rounded-full p-1 shadow-md"
+                                >
+                                    <FiX size={20} />
+                                </button>
+                                <img
+                                    src={currentImage}
+                                    alt="Preview Large"
+                                    className="max-w-full max-h-[80vh] object-contain rounded-md"
+                                />
+                            </div>
+                        </div>
+                    )}
+
                 </div>
+
 
 
 
                 {/*  */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <SelectField
+                    {/* <SelectField
                         label="Texture"
                         name="texture"
                         register={register}
                         errors={errors}
                         rules={{ required: "Texture is required" }}
                         options={textureOptions}
-                    />
+                    /> */}
+
                     <InputField
                         label="Pile Thickness (e.g., 2/7 inch)"
                         name="pileThickness"
                         register={register}
                         errors={errors}
-                        rules={{ required: "Pile thickness is required" }}
+                    // rules={{ required: "Pile thickness is required" }}
+                    />
+
+                     <SelectField
+                        label="Size"
+                        name="size"
+                        register={register}
+                        errors={errors}
+                        // rules={{ required: "Size is required" }}
+                        options={sizeOptions}
                     />
                 </div>
 
                 {/* Size & Style */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* You can switch to InputField if sizes vary too much */}
-                    <SelectField
-                        label="Size"
-                        name="size"
-                        register={register}
-                        errors={errors}
-                        rules={{ required: "Size is required" }}
-                        options={sizeOptions}
-                    />
+                   
                     <SelectField
                         label="Style"
                         name="style"
                         register={register}
                         errors={errors}
-                        rules={{ required: "Style is required" }}
+                        // rules={{ required: "Style is required" }}
                         options={styleOptions}
                     />
-                </div>
-                {/* Additional Details */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
                     <SelectField
                         label="Meterial"
                         name="fabric"
                         register={register}
                         errors={errors}
-                        rules={{ required: "Fabric is required" }}
+                        // rules={{ required: "Fabric is required" }}
                         options={fabrics?.map((cat) => ({
                             value: cat._id || cat.value,
                             label: cat.title || cat.label,
                         }))}
                     />
+                </div>
+                {/* Additional Details */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* <SelectField
+                        label="Meterial"
+                        name="fabric"
+                        register={register}
+                        errors={errors}
+                        // rules={{ required: "Fabric is required" }}
+                        options={fabrics?.map((cat) => ({
+                            value: cat._id || cat.value,
+                            label: cat.title || cat.label,
+                        }))}
+                    /> */}
                     <InputField
                         label="Technique"
                         name="technique"
                         register={register}
                         errors={errors}
-                        rules={{ required: "Technique is required" }}
+                    // rules={{ required: "Technique is required" }}
                     />
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
                     <InputField
                         label="Color"
                         name="color"
@@ -298,6 +365,10 @@ const AddProduct = () => {
                         errors={errors}
                         rules={{ required: "Color is required" }}
                     />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    
                     <InputField
                         label="Weight (KG)"
                         name="weight"
@@ -305,14 +376,15 @@ const AddProduct = () => {
                         errors={errors}
                         rules={{ required: "Weight is required" }}
                     />
-                </div>
-                <InputField
+                    {/* <InputField
                     label="Assurance"
                     name="assurance"
                     register={register}
                     errors={errors}
                     rules={{ required: "Assurance is required" }}
-                />
+                /> */}
+                </div>
+                
                 <InputField
                     label="HSN Code"
                     name="hsnCode"

@@ -69,7 +69,7 @@ const ProductCard = React.memo(({ product, viewMode, navigate }) => {
                     onClick={() => navigate(`/product/${product._id}`)}
                     className="text-lg font-semibold text-foreground line-clamp-2 group-hover:text-foreground transition-colors cursor-pointer"
                 >
-                    {product.name}
+                    {product?.name}
                 </h3>
                 <p className="text-sm text-foreground line-clamp-2 leading-relaxed">
                     {product.description || "Premium quality product with excellent craftsmanship."}

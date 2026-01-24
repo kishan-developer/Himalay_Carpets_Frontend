@@ -160,7 +160,7 @@ const AboutUs = () => {
                     </p>
                     <div className="space-x-4">
                         <Link
-                            to="/products/all/685a6381e6c33dcf91fa54d0"
+                            to="/products/all/696b32fa0d9bad1460f6e065"
                             className="bg-white text-[rgb(83,62,45)] px-6 py-2 font-medium rounded"
                         >
                             Explore Products

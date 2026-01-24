@@ -3,7 +3,7 @@ import axiosInstance from "./apiConnector";
 import { handleAxiosError } from "./handleAxiosError";
 
 const uploadMedia = async (files, data) => {
-    console.log("information-----------", data); // undefined
+    // console.log("information-----------", data); // undefined
     const formData = new FormData();
 
     files.forEach((file) => {

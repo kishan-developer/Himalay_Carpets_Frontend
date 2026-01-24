@@ -72,6 +72,14 @@ const AdminRoutes = (
             }
         />
         <Route
+            path="products/views_details/:id"
+            element={
+                <Suspense fallback={<Loader />}>
+                    <EditProduct />
+                </Suspense>
+            }
+        />
+        <Route
             path="products/add"
             element={
                 <Suspense fallback={<Loader />}>

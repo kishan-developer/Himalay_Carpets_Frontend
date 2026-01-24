@@ -68,11 +68,11 @@ function AdminAccountDashboard() {
                 label: "coupon",
                 icon: <BiSolidCoupon size={20} />,
             },
-            {
-                path: "newsletters",
-                label: "newsletters",
-                icon: <FaRegNewspaper size={20} />,
-            },
+            // {
+            //     path: "newsletters",
+            //     label: "newsletters",
+            //     icon: <FaRegNewspaper size={20} />,
+            // },
         ];
     }, []);
 

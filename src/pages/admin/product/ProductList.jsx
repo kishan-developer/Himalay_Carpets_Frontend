@@ -41,6 +41,10 @@ const ProductList = () => {
     const [sortField, setSortField] = useState(null);
     const [sortOrder, setSortOrder] = useState("asc");
 
+    //For Image Model States 
+    const [detailsOpen, setDetailsOpen] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState("");
+
     const [loading, setLoading] = useState(true);
 
     // simulate loading time
@@ -196,9 +200,11 @@ const ProductList = () => {
                             <img
                                 src={product.images[0]}
                                 alt={product.name}
-                                className="w-20 h-20 object-cover mx-auto rounded-md"
+                                className="w-70 h-40 object-cover mx-auto rounded-md"
                             />
-                            <h3 className="text-base font-medium text-gray-800 text-center">
+
+
+                            <h3 className="text-base font-medium text-gray-800 ">
                                 {product.name}
                             </h3>
                             <p className="text-sm text-gray-600 line-clamp-2">
@@ -208,7 +214,7 @@ const ProductList = () => {
                                 Category: {product?.category?.name}
                             </p>
                             <p className="text-sm text-gray-600">
-                                Price: ₹{product?.price}
+                                Price: <span className="text-green-700 font-semibold">₹{product?.price}</span>
                             </p>
                             <p className="text-sm text-gray-600">
                                 Stock: {product?.stock}
@@ -226,6 +232,24 @@ const ProductList = () => {
                                 >
                                     <FiTrash size={14} /> Delete
                                 </button>
+
+                                {/* <Link
+                                    to={`/admin/products/views_details/${product._id}`}
+                                    className="flex items-center gap-1 text-blue-600 hover:text-blue-700 text-sm"
+                                >
+                                    <FiEdit size={14} /> View Details
+                                </Link> */}
+
+                                {/* <button
+                                    onClick={() => {
+                                        setSelectedProduct(product);
+                                        setDetailsOpen(true);
+                                        setCurrentIndex(0);
+                                    }}
+                                    className="text-sm text-purple-600 hover:text-purple-800 underline"
+                                >
+                                    View Details
+                                </button> */}
                             </div>
                         </motion.div>
                     ))}
@@ -265,6 +289,88 @@ const ProductList = () => {
                     </motion.div>
                 </div>
             )}
+
+
+            {detailsOpen && selectedProduct && (
+                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="bg-white rounded-lg p-5 w-full max-w-xl relative"
+                    >
+                        {/* Close Button */}
+                        <button
+                            onClick={() => setDetailsOpen(false)}
+                            className="absolute top-2 right-2 text-gray-600 hover:text-black text-xl"
+                        >
+                            ✖
+                        </button>
+
+                        {/* Title */}
+                        <h2 className="text-xl font-semibold mb-3 text-gray-800">
+                            {selectedProduct.name}
+                        </h2>
+
+                        {/* Image Slider */}
+                        <img
+                            src={selectedProduct.images[currentIndex]}
+                            alt={selectedProduct.name}
+                            className="w-full h-64 object-contain rounded-md bg-gray-50"
+                        />
+
+                        <div className="flex justify-between mt-3">
+                            <button
+                                disabled={currentIndex === 0}
+                                onClick={() => setCurrentIndex((i) => i - 1)}
+                                className="px-3 py-1 bg-gray-200 rounded disabled:opacity-40"
+                            >
+                                Prev
+                            </button>
+
+                            <button
+                                disabled={currentIndex === selectedProduct.images.length - 1}
+                                onClick={() => setCurrentIndex((i) => i + 1)}
+                                className="px-3 py-1 bg-gray-200 rounded disabled:opacity-40"
+                            >
+                                Next
+                            </button>
+                        </div>
+
+                        {/* Thumbnails */}
+                        <div className="flex gap-2 mt-3 overflow-x-auto">
+                            {/* {selectedProduct.images.map((img, i) => (
+                                <img
+                                    key={i}
+                                    src={img}
+                                    onClick={() => setCurrentIndex(i)}
+                                    className={`w-16 h-16 rounded object-cover cursor-pointer border ${i === currentIndex ? "border-purple-600" : "border-transparent"}`}
+                                />
+                            ))} */}
+                        </div>
+
+                        {/* Product Details */}
+                        <div className="mt-4 space-y-2">
+                            <p className="text-sm text-gray-700">
+                                <span className="font-semibold">Category:</span> {selectedProduct.category?.name}
+                            </p>
+
+                            <p className="text-sm text-gray-700">
+                                <span className="font-semibold">Price:</span> ₹{selectedProduct.price}
+                            </p>
+
+                            <p className="text-sm text-gray-700">
+                                <span className="font-semibold">Stock:</span> {selectedProduct.stock}
+                            </p>
+
+                            <p className="text-sm text-gray-700">
+                                <span className="font-semibold">Description:</span><br />
+                                {selectedProduct.description}
+                            </p>
+                        </div>
+                    </motion.div>
+                </div>
+            )}
+
         </motion.div>
     );
 };

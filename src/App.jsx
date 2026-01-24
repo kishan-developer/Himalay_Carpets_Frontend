@@ -9,6 +9,7 @@ import {
     setCategories,
     setIsCategoriesLoaded,
 } from "./redux/slices/categorySlice";
+
 import { setCart } from "./redux/slices/cartSlice";
 import { setWishList } from "./redux/slices/wishListSlice";
 import { setFabrics } from "./redux/slices/fabricSlice";
@@ -21,13 +22,10 @@ import { handleAxiosError } from "./utils/handleAxiosError";
 
 function App() {
     const dispatch = useDispatch();
-
     const { token, user } = useSelector((state) => state.user);
     const isProductLoaded = useSelector((state) => state.product.isLoaded);
     const isCategoryLoaded = useSelector((state) => state.category.isLoaded);
-
     const hasFetchedUser = useRef(false);
-
 
 
     // don't allow to download images in anyone
@@ -48,12 +46,7 @@ function App() {
 
 
 
-
-
-
     // ========== CALLBACKS ==========
-
-
     const fetchUser = useCallback(async () => {
         dispatch(setAuthLoading(true));
         try {

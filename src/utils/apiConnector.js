@@ -5,7 +5,7 @@ import authApis from "../services/api/auth/auth.apis";
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
-  timeout: 1800000,
+  timeout: 1500000,
   withCredentials: true,
 });
 
@@ -22,7 +22,7 @@ function processQueue(error, token = null) {
       prom.resolve(token);
     }
   });
-  failedQueue = [];
+  failedQueue = []; 
 }
 
 axiosInstance.interceptors.request.use(

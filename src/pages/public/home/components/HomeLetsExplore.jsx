@@ -33,7 +33,8 @@ function HomeLetsExplore() {
                             piece today.
                         </h2>
                         <Link
-                            to={'/products/all/685a6381e6c33dcf91fa54d0'}
+                            to={'/products/all/696b32fa0d9bad1460f6e065'}
+                            //  onClick={() => navigate("/products/all/696b32fa0d9bad1460f6e065")}
                             className="text-lg md:text-xl bg-white text-gray-800 w-44 md:w-52 px-4 py-2 border border-transparent hover:border-white hover:bg-transparent hover:text-white transition-all duration-200"
                         >
                             Explore

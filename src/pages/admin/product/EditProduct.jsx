@@ -52,6 +52,19 @@ const EditProduct = () => {
     const [initialData, setInitialData] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    const [modalOpen, setModalOpen] = useState(false);
+    const [currentImage, setCurrentImage] = useState(null);
+
+    const openModal = (src) => {
+        setCurrentImage(src);
+        setModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setCurrentImage(null);
+        setModalOpen(false);
+    };
+
     const watchedFields = watch();
 
     // --- Helper: build select option arrays (values are strings) ---
@@ -365,8 +378,10 @@ const EditProduct = () => {
                     {imagePreviews.length > 0 && (
                         <div className="mt-2 flex flex-wrap gap-2">
                             {imagePreviews.map((src, i) => (
-                                <div key={i} className="relative w-16 h-16">
-                                    <img src={src} alt={`Preview ${i}`} className="w-full h-full object-cover rounded-md" />
+                                <div key={i} className="relative w-60 h-40">
+                                    <img
+                                        onClick={() => openModal(src)} // open modal on click
+                                        src={src} alt={`Preview ${i}`} className="w-full h-full object-cover rounded-md" />
                                     <button
                                         type="button"
                                         onClick={() => handleRemoveImage(i)}
@@ -378,7 +393,36 @@ const EditProduct = () => {
                             ))}
                         </div>
                     )}
+
+                    {/* Modal */}
+                    {modalOpen && (
+                        <div
+                            className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+                            onClick={closeModal} // close when clicking outside
+                        >
+                            <div
+                                className="relative bg-white rounded-md p-2 max-w-3xl max-h-[90vh]"
+                                onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
+                            >
+                                <button
+                                    type="button"
+                                    onClick={closeModal}
+                                    className="absolute top-2 right-2 bg-gray-100 rounded-full p-1 shadow-md"
+                                >
+                                    <FiX size={20} />
+                                </button>
+                                <img
+                                    src={currentImage}
+                                    alt="Preview Large"
+                                    className="max-w-full max-h-[80vh] object-contain rounded-md"
+                                />
+                            </div>
+                        </div>
+                    )}
                 </div>
+
+
+
 
                 {/* Texture & Pile */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

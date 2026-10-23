@@ -40,12 +40,12 @@ const ProductDetailsSkeleton = () => (
 // Breadcrumb Navigation
 const Breadcrumb = ({ product }) => (
 
-   
+
 
     <nav className="hidden sm:flex text-sm space-x-2 text-foreground mb-6 capitalize">
         <Link to="/">Home</Link>
-       
-        
+
+
         <span>/</span>
         {/* <Link
             to={`/products/${slugify(product?.name, { lower: true })}/${product?.category?._id
@@ -65,6 +65,9 @@ function ProductDetailsPage() {
     const [isZoomed, setIsZoomed] = useState(false);
     const [zoomedImage, setZoomedImage] = useState("");
 
+    // console.log("currect product id", id)
+
+
     const productQuery = useQuery({
         queryKey: ["product", id],
         queryFn: () =>
@@ -73,14 +76,20 @@ function ProductDetailsPage() {
     });
 
     const handleAddToCart = async (prod) => {
-        if (product.stock < 1) {
-            toast("Currenlty This Product Not Available ");
+        // alert("card");
+
+        // console.log("product inside Handle Add To Cart", prod);
+
+        if (prod.stock < 1) {
+            toast("Currently this product is not available");
             return;
         }
 
         if (user) {
             try {
-                const res = await axiosInstance.post("/user/cart/add", {
+                // alert("user");
+                // console.log("role", user.role)
+                const res = await axiosInstance.post(`/${user.role}/cart/add`, {
                     product: prod._id,
                     quantity: prod.quantity,
                     finalPrice: prod.finalPrice,
@@ -88,13 +97,19 @@ function ProductDetailsPage() {
                     totalPrice: prod.finalPrice * prod.quantity,
                     userId: user._id,
                 });
+
+                // console.log("cart data", res.data);
                 dispatch(setCart(res.data));
+                toast.success("Added to cart");   // only on success
             } catch {
                 toast.error("Failed to sync cart. Offline copy retained.");
+                return;  //  Stops further execution
             }
+        } else {
+            toast.success("Added to cart"); // If allowed for guest cart
         }
-        toast.success("Added to cart");
     };
+
 
     const handleShare = () => {
         if (navigator.share) {

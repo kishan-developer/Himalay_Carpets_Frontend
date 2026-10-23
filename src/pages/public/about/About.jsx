@@ -32,12 +32,6 @@ const StatsSection = () => {
 
 
 
-
-
-
-
-
-
 const AboutUs = () => {
     return (
         <div className="bg-white">
@@ -58,7 +52,7 @@ const AboutUs = () => {
                     </h2>
                     <p className="text-gray-700 leading-relaxed mb-6">
                         Himalaya Carpets is an Indian government-recognised export
-                        house engaged in the manufacture and export of all types of
+                        house since 1987 engaged in the manufacture and export of all types of
                         handmade carpets. With decades of experience, our promoters
                         have built a reputation for delivering excellent quality
                         products that reflect the latest trends in home décor.
@@ -90,7 +84,7 @@ const AboutUs = () => {
                         <li>Jaunty Inc.</li>
                         <li>Limited Edition</li>
                         <li>Afridi Gallery</li>
-                        <li>Cabib Genova Saraswati Rugs</li>
+                        <li>Cabib Genova Hous of wool and  Mirzai</li>
                     </ul>
                 </div>
             </section>
@@ -102,7 +96,7 @@ const AboutUs = () => {
                         Our Factory & Capabilities
                     </h2>
                     <ul className="list-disc list-inside text-gray-700 space-y-2">
-                        <li>3 campuses spread over 2 acres for different carpet qualities</li>
+                        <li>2 campuses spread over 2 acres for different carpet qualities</li>
                         <li>In-house looms of multiple types</li>
                         <li>Dedicated drying chambers for all-weather production</li>
                         <li>In-house weaving, processing & finishing</li>
@@ -174,6 +168,11 @@ const AboutUs = () => {
                     </div>
                 </div>
             </section>
+
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3604.727566240339!2d82.5688242!3d25.3804455!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398fdd9f5f1b7293%3A0x1de67c63a58b4ad7!2sThe%20Himalaya%20Carpets!5e0!3m2!1sen!2sin!4v1771328734331!5m2!1sen!2sin" className="w-full h-[60vh]"  referrerpolicy="no-referrer-when-downgrade"></iframe>
+{/* 
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3604.727566240339!2d82.5688242!3d25.3804455!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398fdd9f5f1b7293%3A0x1de67c63a58b4ad7!2sThe%20Himalaya%20Carpets!5e0!3m2!1sen!2sin!4v1771328734331!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> */}
+
         </div>
     );
 };

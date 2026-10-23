@@ -39,6 +39,7 @@ export default function ProductInfo({ product, onAddToCart, onShare }) {
     const [shippingOpen, setShippingOpen] = useState(false);
     const [isOfferAplied, setIsOfferAplied] = useState(product.isOfferAplied);
     const basePrice = product?.price || 0;
+
     const addonPrice =
         (withFallPico ? FALLPICO_PRICE : 0) +
         (withTassels ? TASSELLS_PRICE : 0);
@@ -46,6 +47,13 @@ export default function ProductInfo({ product, onAddToCart, onShare }) {
     // Apply discount only to base price
     const discountedBase =
         offer && isOfferAplied ? basePrice * (1 - offer / 100) : basePrice;
+
+    const formattedPrice = new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+        maximumFractionDigits: 0,
+    }).format(Math.round(discountedBase));
+
     const finalPrice = Math.round(discountedBase + addonPrice);
     const totalBefore = Math.round(basePrice + addonPrice);
 
@@ -69,8 +77,12 @@ export default function ProductInfo({ product, onAddToCart, onShare }) {
         ));
 
     const handleAddToCart = async () => {
+
+        // alert("clieck call");
+        // console.log("product in productinfo page ", product)
         if (!user) return navigate("/login");
         if (inCart) return navigate("/cart");
+
         await onAddToCart?.({
             ...product,
             quantity: qty,
@@ -153,7 +165,8 @@ export default function ProductInfo({ product, onAddToCart, onShare }) {
 
             {/* Pricing */}
             <div className="text-2xl sm:text-3xl font-bold text-foreground flex items-center gap-3">
-                ₹{Math.round(discountedBase)}
+                {/* ₹{Math.round(discountedBase)} */}
+                {formattedPrice}
                 {offer && isOfferAplied && (
                     <span className="text-lg sm:text-xl text-green-600 font-medium">
                         <span className="line-through">₹{basePrice}</span> (
@@ -190,10 +203,6 @@ export default function ProductInfo({ product, onAddToCart, onShare }) {
                 <p>
                     <strong>Technique:</strong> {product.technique ?? "N/A"}
                 </p>
-
-
-
-
 
                 <p>
                     <strong>Material :</strong> {product?.fabric?.title ?? "N/A"}

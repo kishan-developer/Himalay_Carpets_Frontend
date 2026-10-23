@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom"; // <-- use Navigate
 import PublicRoutes from "./PublicRoutes";
 import UserRoutes from "./UserRoutes";
 import AdminRoutes from "./AdminRoutes";
@@ -13,6 +13,7 @@ function AppRoutes() {
     if (token && isLoading) {
         return <Loader />;
     }
+
     return (
         <Routes>
             {PublicRoutes}
@@ -25,7 +26,9 @@ function AppRoutes() {
 
             {/* Fallbacks */}
             <Route path="/unauthorized" element={<h1>🚫 Unauthorized</h1>} />
-            <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+
+            {/* Redirect all unknown routes to home */}
+            <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
     );
 }

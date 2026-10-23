@@ -5,6 +5,10 @@
     --color-foreground: rgb(83, 62, 45);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* INput Style Start */
 .input-wrapper {
     position: relative;

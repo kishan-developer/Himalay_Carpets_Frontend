@@ -96,7 +96,7 @@ const ProductList = () => {
         try {
             const res = await productApis.deleteProduct(productId);
             setProducts();
-            console.log("Product Response After Delete ->", res);
+            // console.log("Product Response After Delete ->", res);
             dispatch(setProducts(res));
             setDeleteProductId(null);
         } catch (error) {
@@ -105,6 +105,20 @@ const ProductList = () => {
             toast.dismiss(toastId);
         }
     };
+
+    // const formattedPrice = new Intl.NumberFormat("en-IN", {
+    //     style: "currency",
+    //     currency: "INR",
+    //     maximumFractionDigits: 0,
+    // }).format(Number(product?.price || 0));
+
+    const formatINR = (amount) =>
+        new Intl.NumberFormat("en-IN", {
+            style: "currency",
+            currency: "INR",
+            maximumFractionDigits: 0,
+        }).format(Number(amount || 0));
+
 
     return (
         <motion.div
@@ -203,18 +217,21 @@ const ProductList = () => {
                                 className="w-70 h-40 object-cover mx-auto rounded-md"
                             />
 
-
-                            <h3 className="text-base font-medium text-gray-800 ">
+                            <h3 className="capitalize text-base font-medium text-gray-800 ">
                                 {product.name}
                             </h3>
+
                             <p className="text-sm text-gray-600 line-clamp-2">
                                 {product.description}
                             </p>
+
                             <p className="text-sm text-gray-600">
                                 Category: {product?.category?.name}
                             </p>
+
                             <p className="text-sm text-gray-600">
-                                Price: <span className="text-green-700 font-semibold">₹{product?.price}</span>
+                                {/* Price: <span className="text-green-700 font-semibold">₹{product?.price}</span> */}
+                                Price: <span className="text-green-700 font-semibold">{formatINR(product?.price)}</span>
                             </p>
                             <p className="text-sm text-gray-600">
                                 Stock: {product?.stock}

@@ -1,0 +1,1 @@
+import{b as t,h as s}from"./index-LTrFFEtW.js";const p=async(e,n)=>{var o;const r=new FormData;e.forEach(a=>{r.append("files",a)}),r.append("name",n.name);try{return(o=(await t.post("/upload",r)).data)==null?void 0:o.data}catch(a){return console.error("Upload failed:",a),s(a),null}};export{p as u};

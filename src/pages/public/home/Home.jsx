@@ -13,14 +13,17 @@ import Certifications from "../../../components/common/Certification";
 const HomeSection4 = React.lazy(() =>
     import("./components/HomeOnlyTwoSlideGrid")
 );
+
 const WhyChooseUs = React.lazy(() => import("./components/WhyChooseUs"));
 const Home3Grid = React.lazy(() => import("./components/Home3Grid"));
 const HomeVideo = React.lazy(() => import("./components/HomeVideo"));
 const Home2BigGrid = React.lazy(() => import("./components/Home2BigGrid"));
 const HomeAbout = React.lazy(() => import("./components/HomeAbout"));
+
 // const HomeOneImageOnly = React.lazy(() =>
 //     import("./components/HomeOneImageOnly")
 // );
+
 const HomeLetsExplore = React.lazy(() =>
     import("./components/HomeLetsExplore")
 );

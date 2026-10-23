@@ -270,7 +270,7 @@ function MakeYourOwnRugsPage() {
 
                         {/* Using InputField component for color palette */}
                         <InputField
-                            label="Preferred Color Palette"
+                            label="Preferred Color Palette ( HEX #000000 )"
                             name="colorPalette"
                             register={register}
                             errors={errors}

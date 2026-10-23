@@ -1,9 +1,10 @@
 {
-  "name": "frontend",
+  "name": "himalaya_carpets",
+  "developer": "Kishan Kumar Ray",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "/",
+  "home": "",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -15,6 +16,7 @@
     "@tailwindcss/vite": "^4.1.3",
     "@tanstack/react-query": "^5.82.0",
     "axios": "^1.8.4",
+    "browser-image-compression": "^2.0.2",
     "dotenv": "^16.5.0",
     "lucide-react": "^0.511.0",
     "motion": "^12.7.4",

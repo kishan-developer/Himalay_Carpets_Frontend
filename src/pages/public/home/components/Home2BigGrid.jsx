@@ -16,17 +16,17 @@ function EventsSection() {
         {
             image: HumptexImg,
             text: "Heimtextil",
-            link: "/gallery",
+            link: "/events",
         },
         {
             image: CEPCImg,
             text: "CEPC",
-            link: "/gallery",
+            link: "/events",
         },
         {
             image: DomotexImg,
             text: "domotex",
-            link: "/gallery",
+            link: "/events",
         },
     ];
 

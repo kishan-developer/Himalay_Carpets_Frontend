@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import imageCompression from "browser-image-compression"; // help to image size compress
 import { FiImage, FiX } from "react-icons/fi";
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -45,14 +46,55 @@ const AddProduct = () => {
     // Fetch Fabrics On First load
 
     // Handle file input and generate preview
-    const handleImageUpload = (e) => {
-        const files = Array.from(e.target.files);
-        console.log("files", files)
-        setImageFiles(files);
-        const previews = files.map((file) => URL.createObjectURL(file));
-        console.log("previews", previews)
-        setImagePreviews(previews);
+    // const handleImageUpload = (e) => {
+    //     const files = Array.from(e.target.files);
+    //     console.log("files", files)
+    //     setImageFiles(files);
+    //     const previews = files.map((file) => URL.createObjectURL(file));
+    //     // console.log("previews", previews)
+    //     setImagePreviews(previews);
+    // };
+
+
+    const handleImageUpload = async (e) => {
+        const files = Array.from(e.target.files || []);
+        if (!files.length) return;
+
+        const compressedFiles = [];
+
+        for (let file of files) {
+            const options = {
+                maxSizeMB: 0.9,            // 👈 target ≈ 900KB
+                maxWidthOrHeight: 1800,    // reduces size but keeps quality
+                initialQuality: 0.7,       // adjust for consistent <900KB
+                useWebWorker: true,
+            };
+
+            try {
+                const compressedFile = await imageCompression(file, options);
+                compressedFiles.push(compressedFile);
+
+                // console.log(
+                //     "Compressed:",
+                //     compressedFile.name,
+                //     (compressedFile.size / 1024).toFixed(2) + " KB"
+                // );
+            } catch (error) {
+                console.error("Compression error:", error);
+                compressedFiles.push(file);
+            }
+        }
+
+        // Update state with compressed files
+        setImageFiles((prev) => [...prev, ...compressedFiles]);
+
+        // Preview URLs
+        const newPreviews = compressedFiles.map((f) =>
+            URL.createObjectURL(f)
+        );
+        setImagePreviews((prev) => [...prev, ...newPreviews]);
     };
+
 
     // Remove a single image from preview & file list
     const handleRemoveImage = (index) => {
@@ -66,7 +108,7 @@ const AddProduct = () => {
 
     // Form submit handler
     const onSubmit = async (data) => {
-        console.log(data);
+        // console.log(data);
         if (imageFiles.length === 0) {
             toast.error("Please upload at least one image.");
             return;
@@ -75,7 +117,7 @@ const AddProduct = () => {
         let totalSize = 0;
         imageFiles.forEach(file => {
             // totalSize += file.size;
-            console.log("files Size", file.size)
+            // console.log("files Size", file.size)
         });
 
         if (totalSize > 50 * 1024 * 1024) { // 50MB total limit example
@@ -129,17 +171,36 @@ const AddProduct = () => {
         { value: "Rough", label: "Rough" },
     ];
 
-    
+
     const styleOptions = [
         { value: "rectangle", label: "Rectangle" },
         { value: "square", label: "Square" },
 
     ];
 
+    const materialOptins = [
+        { value: "n.z.wool+silk", label: "N.Z. Wool + Silk" },
+        { value: "h/s_n.z._wool", label: "H/S N.Z. Wool" },
+        { value: "h/s_n.z._wool+silk", label: "H/S N.Z. Wool + Silk" },
+        { value: "imported_wool", label: "Imported Wool" },
+        { value: "h/s_n.z._wool+hand_karted_wool", label: "H/S N.Z. Wool + Hand Karted Wool" },
+        { value: "h/s_n.z_3_ply_wool", label: "H/S N.Z. 3 Ply Wool" },
+
+        { value: "n.z_wool", label: "N.Z. Wool" },
+        { value: "hand_karted_wool", label: "Hand Karted Wool" },
+
+        { value: "imported_wool+viscose", label: "Imported Wool + Viscose" },
+        { value: "h/s_n.z_wool+jasmine_silk", label: "H/S N.Z. Wool + Jasmine Silk" },
+        { value: "n.z_wool", label: "Imported Wool + Viscose" },
+        { value: "n.z_wool", label: "N.Z. Wool" },
+        { value: "n.z_wool", label: "N.Z. Wool" },
+    ]
+
     // Example size options; you may also choose free text
     const sizeOptions = [
-        
+
         { value: "1.5x2 ft", label: "1.5x2 ft" },
+        { value: "2x2 ft", label: "2x2 ft" },
         { value: "2x3 ft", label: "2x3 ft" },
         { value: "2.5x4 ft", label: "2.5x4 ft" },
         { value: "4x6 ft", label: "4x6 ft" },
@@ -189,7 +250,7 @@ const AddProduct = () => {
                     errors={errors}
                     rules={{
                         required: "Price is required",
-                        min: { value: 0, message: "Must be positive" },
+                        min: { value: "", message: "Must be positive" },
                     }}
                 />
 
@@ -280,9 +341,6 @@ const AddProduct = () => {
 
                 </div>
 
-
-
-
                 {/*  */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* <SelectField
@@ -302,7 +360,7 @@ const AddProduct = () => {
                     // rules={{ required: "Pile thickness is required" }}
                     />
 
-                     <SelectField
+                    <SelectField
                         label="Size"
                         name="size"
                         register={register}
@@ -315,7 +373,7 @@ const AddProduct = () => {
                 {/* Size & Style */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* You can switch to InputField if sizes vary too much */}
-                   
+
                     <SelectField
                         label="Style"
                         name="style"
@@ -325,12 +383,18 @@ const AddProduct = () => {
                         options={styleOptions}
                     />
 
+                    {/* <InputField
+                        label="Material"
+                        name="fabric"
+                        register={register}
+                        errors={errors} */}
+                    {/* // rules={{ required: "Technique is required" }} */}
+                    {/* /> */}
                     <SelectField
                         label="Meterial"
                         name="fabric"
                         register={register}
                         errors={errors}
-                        // rules={{ required: "Fabric is required" }}
                         options={fabrics?.map((cat) => ({
                             value: cat._id || cat.value,
                             label: cat.title || cat.label,
@@ -368,7 +432,7 @@ const AddProduct = () => {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    
+
                     <InputField
                         label="Weight (KG)"
                         name="weight"
@@ -384,12 +448,12 @@ const AddProduct = () => {
                     rules={{ required: "Assurance is required" }}
                 /> */}
                 </div>
-                
+
                 <InputField
                     label="HSN Code"
                     name="hsnCode"
                     register={register}
-                    value="5507"
+                    value="57011010"
                     errors={errors}
                     rules={{
                         required: "HSN Code is required",

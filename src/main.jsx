@@ -15,7 +15,7 @@ import PhoneCallIcon from "./components/common/PhoneCallIcon.jsx";
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
-    <BrowserRouter>
+    <BrowserRouter basename="/">
         <ReduxProvider store={store}>
             <QueryClientProvider client={queryClient}>
                 <App />

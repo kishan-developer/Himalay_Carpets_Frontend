@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from "react";
 import { Route } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import Loader from "../components/common/Loader";
+import Events from "../pages/public/gallery/Events";
 const GalleryPage = lazy(() => import("../pages/public/gallery/Gallery"))
 
 // Lazy load public pages
@@ -162,10 +163,11 @@ const PublicRoutes = (
             }
         />
         <Route
-            path="/gallery"
+            path="/events"
             element={
                 <Suspense fallback={<Loader />}>
-                    <GalleryPage />
+                    {/* <GalleryPage /> */}
+                    <Events />
                 </Suspense>
             }
         />

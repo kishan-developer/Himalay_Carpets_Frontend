@@ -15,8 +15,17 @@ const ProductCard = React.memo(({ product, viewMode, navigate }) => {
 
 
     // Apply discount only to base price
+
     const discountedBase =
         offer && isOfferAplied ? basePrice * (1 - offer / 100) : basePrice;
+
+    const formattedPrice = new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR',
+        maximumFractionDigits: 0,
+    }).format(Math.round(discountedBase));
+
+
     // const finalPrice = Math.round(discountedBase + addonPrice);
     // const totalBefore = Math.round(basePrice + addonPrice);
 
@@ -81,7 +90,9 @@ const ProductCard = React.memo(({ product, viewMode, navigate }) => {
                 <div className="flex justify-between items-center">
                     <div className="space-y-1">
                         <p className="text-lg font-bold text-foreground">
-                            ₹{Math.round(discountedBase)}{""}
+                            {/* ₹{Math.round(discountedBase)}{""} */}
+
+                            {(formattedPrice)}
                             {offer && isOfferAplied && (
                                 <span className="text-sm text-green-600 font-medium ml-2">
                                     <span className="line-through mr-1 text-gray-500">₹{basePrice}</span>
@@ -153,8 +164,6 @@ const CachedImage = ({ src, alt, product, offer, isOfferAplied }) => {
 
     return (
         <div className="relative w-full h-full cursor-pointer">
-
-
             <img
                 src={imageSrc || src}
                 alt={alt}
@@ -163,19 +172,13 @@ const CachedImage = ({ src, alt, product, offer, isOfferAplied }) => {
                 onClick={() => navigate(`/product/${product._id}`)}
             />
 
-
             {offer && isOfferAplied && (
                 <div className="absolute top-4 right-[-40px] rotate-45 bg-orange-500 text-white px-10 py-1 shadow-md">
                     {offer}% OFF
                 </div>
             )}
 
-
-
-
-
         </div>
-
     );
 };
 

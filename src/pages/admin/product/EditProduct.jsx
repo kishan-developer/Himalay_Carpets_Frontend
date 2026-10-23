@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import imageCompression from "browser-image-compression"; // help to image size compress
 import { FiImage, FiX } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -86,23 +87,21 @@ const EditProduct = () => {
     ];
 
     const styleOptions = [
-
-
-        { value: "Modern", label: "Modern" },
-        { value: "Persian", label: "Persian" },
-        { value: "Traditional", label: "Traditional" },
-        { value: "Contemporary", label: "Contemporary" },
-
-
+        { value: "rectangle", label: "Rectangle" },
+        { value: "square", label: "Square" },
     ];
 
     const sizeOptions = [
-        { value: "3x5 ft", label: "3x5 ft" },
+        { value: "1.5x2 ft", label: "1.5x2 ft" },
+        { value: "2x3 ft", label: "2x3 ft" },
+        { value: "2x2 ft", label: "2x2 ft" },
+        { value: "2.5x4 ft", label: "2.5x4 ft" },
         { value: "4x6 ft", label: "4x6 ft" },
         { value: "5x8 ft", label: "5x8 ft" },
         { value: "6x9 ft", label: "6x9 ft" },
         { value: "8x10 ft", label: "8x10 ft" },
-        { value: "others", label: "others" },
+        { value: "8x11 ft", label: "8x11 ft" },
+        { value: 'others', label: "others" }
     ];
 
     const offerDiscountOptions = [
@@ -120,6 +119,8 @@ const EditProduct = () => {
         // Wait until product exists in store
         if (!product) return;
 
+        console.log("Product", product)
+
         const init = {
             name: product.name ?? "",
             description: product.description ?? "",
@@ -129,7 +130,8 @@ const EditProduct = () => {
             stock: product.stock ?? 0,
             fabric: String(product?.fabric?._id ?? product?.fabric ?? ""), // fabric as material
             texture: product.texture ?? "",
-            pileThickness: product.pileThickness ?? "",
+            pileThickness: product.pileThickness ?? "", 
+            material: product.fabric.title ?? "", 
             size: product.size ?? "",
             color: product.color ?? "",
             weight: product.weight ?? "",
@@ -154,17 +156,75 @@ const EditProduct = () => {
     // -------------------------------
     // Handle image selection (append new files in edit mode)
     // -------------------------------
-    const handleImageUpload = (e) => {
+    // const handleImageUpload = (e) => {
+    //     const files = Array.from(e.target.files || []);
+    //     if (!files.length) return;
+
+    //     console.log("files in edit product", files)
+
+    //     // append newly selected files
+    //     setImageFiles((prev) => [...prev, ...files]);
+
+    //     // create object URLs for previews and append
+    //     const newPreviews = files.map((f) => URL.createObjectURL(f));
+    //     setImagePreviews((prev) => [...prev, ...newPreviews]);
+    // };
+
+
+
+    const handleImageUpload = async (e) => {
         const files = Array.from(e.target.files || []);
         if (!files.length) return;
 
-        // append newly selected files
-        setImageFiles((prev) => [...prev, ...files]);
+        const compressedFiles = [];
 
-        // create object URLs for previews and append
-        const newPreviews = files.map((f) => URL.createObjectURL(f));
+        for (let file of files) {
+            // const options = {
+            //     maxSizeMB: 0.9,            // 👈 target ≈ 900KB
+            //     maxWidthOrHeight: 1800,    // reduces size but keeps quality
+            //     initialQuality: 0.7,       // adjust for consistent <900KB
+            //     useWebWorker: true,
+            // };
+
+            const options = {
+                maxSizeMB: 3,             // allow up to 3 MB
+                maxWidthOrHeight: 6000,    // keep high resolution
+                initialQuality: 1.0,      // very high quality
+                useWebWorker: true,
+            };
+
+            // const options = {
+            //     maxSizeMB: 20,            // allow up to 20 MB
+            //     maxWidthOrHeight: 6000,   // keep full resolution (DSLR size)
+            //     initialQuality: 1.0,      // highest quality possible
+            //     useWebWorker: true,
+            // };
+
+            try {
+                const compressedFile = await imageCompression(file, options);
+                compressedFiles.push(compressedFile);
+
+                // console.log(
+                //     "Compressed:",
+                //     compressedFile.name,
+                //     (compressedFile.size / 1024).toFixed(2) + " KB"
+                // );
+            } catch (error) {
+                console.error("Compression error:", error);
+                compressedFiles.push(file);
+            }
+        }
+
+        // Update state with compressed files
+        setImageFiles((prev) => [...prev, ...compressedFiles]);
+
+        // Preview URLs
+        const newPreviews = compressedFiles.map((f) =>
+            URL.createObjectURL(f)
+        );
         setImagePreviews((prev) => [...prev, ...newPreviews]);
     };
+
 
     // -------------------------------
     // Remove an image preview (existing or newly added)
@@ -220,11 +280,19 @@ const EditProduct = () => {
             return;
         }
 
+        //  Show image sizes before upload
+        // imageFiles.forEach((file) => {
+        //     const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+        //     toast.error(`${file.name} - ${sizeInMB} MB`);
+        // });
+
+
         if (originalImages.length === 0 && imageFiles.length === 0) {
             // don't allow saving with no images
             toast.error("Please upload at least one image.");
             return;
         }
+
 
         setIsSubmitting(true);
         const toastId = toast.loading("Please wait...");
@@ -237,6 +305,8 @@ const EditProduct = () => {
                     type: "products",
                     identifier: data.productId || data.name || product?.name,
                 };
+
+                // console.log("imageFiles", imageFiles)
                 uploadedUrls = await uploadMedia(imageFiles, information);
             }
 
@@ -388,6 +458,7 @@ const EditProduct = () => {
                                         className="absolute top-0 right-0 bg-white rounded-full p-0.5 shadow-md"
                                     >
                                         <FiX size={12} />
+
                                     </button>
                                 </div>
                             ))}
@@ -426,7 +497,7 @@ const EditProduct = () => {
 
                 {/* Texture & Pile */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <SelectField
+                    {/* <SelectField
                         label="Texture"
                         name="texture"
                         value={product?.texture}
@@ -434,18 +505,18 @@ const EditProduct = () => {
                         errors={errors}
                         rules={{ required: "Texture is required" }}
                         options={textureOptions}
-                    />
+                    /> */}
+
                     <InputField
                         label="Pile Thickness (e.g., 2/7 inch)"
+                        value={product?.pileThickness}
                         name="pileThickness"
                         register={register}
                         errors={errors}
                         rules={{ required: "Pile thickness is required" }}
+                       
                     />
-                </div>
 
-                {/* Size & Style */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <SelectField
                         label="Size"
                         name="size"
@@ -455,6 +526,12 @@ const EditProduct = () => {
                         rules={{ required: "Size is required" }}
                         options={sizeOptions}
                     />
+
+                </div>
+
+                {/* Size & Style */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
                     <SelectField
                         label="Style"
                         name="style"
@@ -464,10 +541,15 @@ const EditProduct = () => {
                         rules={{ required: "Style is required" }}
                         options={styleOptions}
                     />
-                </div>
+{/* 
+                    <InputField
+                        label="Material"
+                        name="fabric"
+                        register={register}
+                        errors={errors} */}
+                    {/* // rules={{ required: "Technique is required" }}
+                    /> */}
 
-                {/* Additional Details */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <SelectField
                         label="Meterial"
                         name="fabric"
@@ -477,6 +559,13 @@ const EditProduct = () => {
                         rules={{ required: "Fabric is required" }}
                         options={fabricOptions}
                     />
+
+
+                </div>
+
+                {/* Additional Details */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
                     <InputField
                         label="Technique"
                         name="technique"
@@ -484,9 +573,7 @@ const EditProduct = () => {
                         errors={errors}
                         rules={{ required: "Technique is required" }}
                     />
-                </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <InputField
                         label="Color"
                         name="color"
@@ -494,6 +581,11 @@ const EditProduct = () => {
                         errors={errors}
                         rules={{ required: "Color is required" }}
                     />
+
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
                     <InputField
                         label="Weight (KG)"
                         name="weight"
@@ -501,15 +593,16 @@ const EditProduct = () => {
                         errors={errors}
                         rules={{ required: "Weight is required" }}
                     />
+
                 </div>
 
-                <InputField
+                {/* <InputField
                     label="Assurance"
                     name="assurance"
                     register={register}
                     errors={errors}
                     rules={{ required: "Assurance is required" }}
-                />
+                /> */}
                 <InputField
                     label="HSN Code"
                     name="hsnCode"

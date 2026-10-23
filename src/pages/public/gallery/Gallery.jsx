@@ -31,7 +31,7 @@ const GalleryPage = () => {
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <h1 className="text-4xl font-extrabold text-center tracking-tight mb-16">
-                    Our Gallery
+                    Our Events
                 </h1>
 
                 {/* Masonry Grid */}

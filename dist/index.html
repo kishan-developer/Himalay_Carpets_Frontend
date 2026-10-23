@@ -26,10 +26,10 @@
     <meta property="og:description"
         content="Explore timeless handmade carpet elegance crafted with Indian expertise for global markets." />
     <meta property="og:image" content="/fav_icon.png" />
-    <meta property="og:url" content="https://himalayacarpets.com" />
+    <meta property="og:url" content="https://himalayacarpets.in" />
     <meta name="twitter:card" content="summary_large_image" />
-  <script type="module" crossorigin src="/assets/index-C9das3ea.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-pYMcJv5h.css">
+  <script type="module" crossorigin src="/assets/index-LTrFFEtW.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-nHyim6QW.css">
 </head>
 
 <body>
@@ -37,18 +37,30 @@
 
     <!-- Razorpay Integration -->
     <script src="https://checkout.razorpay.com/v1/checkout.js" async defer></script>
+
+
+    
     <!-- Google Translate -->
     <div id="google_translate_element"></div>
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement(
-                { pageLanguage: 'en' },
-                'google_translate_element'
-            );
+
+    <script>
+        function safeGoogleTranslateInit() {
+            if (window.google && window.google.translate) {
+                new window.google.translate.TranslateElement(
+                    { pageLanguage: 'en' },
+                    'google_translate_element'
+                );
+            }
         }
+
+        // Load script dynamically after page load
+        window.addEventListener("load", function () {
+            const script = document.createElement("script");
+            script.src = "https://translate.google.com/translate_a/element.js?cb=safeGoogleTranslateInit";
+            document.body.appendChild(script);
+        });
     </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
-    </script>
+
 
 </body>
 

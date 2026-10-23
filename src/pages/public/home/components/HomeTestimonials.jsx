@@ -20,7 +20,7 @@ function HomeTestimonials() {
         },
         {
             quote: "From initial design concepts to final delivery, Himalaya Carpets provided a seamless experience. Their attention to detail and customer satisfaction is truly commendable.",
-            clientName: "Cabib Genova Saraswati Rugs",
+            clientName: "Cabib Genova Hous of wool and  Mirzai",
             source: "Italy",
         },
     ];

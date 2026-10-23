@@ -3,23 +3,23 @@ import { Building2, Users, Crown, Calendar } from "lucide-react";
 
 const timelineData = [
     {
-        period: "1987 - 2000",
+        period: "1992-2000",
         title: "Himalaya Rugs",
-        description: "Founded under the guidance of ancestral wisdom",
+        description: "Founded by Sandeep Kumar jaiswal, The company started its operation maufacturing handmade carpets locally and very soon became govt. recognised export huse",
         managers: ["Sandeep Kumar Jaisawal"],
         icon: <Building2 className="w-5 h-5" />,
     },
     {
         period: "2000 - 2023",
         title: "Himalaya Collection",
-        description: "Expanded and managed with dedication",
+        description: "In a strategic move, the company revamped its brand to resonate with the pinnacle of handmade carpets and rugs worldwide, swiftly emerging as a top leader in the industry",
         managers: ["Sandeep Kumar Jaisawal"],
         icon: <Crown className="w-5 h-5" />,
     },
     {
         period: "2023 - Present",
         title: "Himalaya Carpets",
-        description: "Continuing the legacy with fresh vision",
+        description: "Welcoming the new generation into the company, infused with their innovative ideas and fresh perspectives, we aspire to become trendsetters, pushing boundaries, and carrying our legacy forward into new dimensions of excellence.",
         managers: ["Varnika Jaisawal", "Suryansh Jaisawal"],
         icon: <Users className="w-5 h-5" />,
         isActive: true,

@@ -264,7 +264,8 @@ function CategoryPage() {
                             <ProductGrid
                                 products={filteredProducts}
                                 viewMode={viewMode}
-                                navigate={navigate} />
+                                navigate={navigate}
+                            />
                         )}
                     </div>
                 </div>

@@ -58,6 +58,7 @@ const SidebarFilter = ({ onFilterChange, isOpen, toggleSidebar }) => {
 
     // Toggle accordion section
     const toggleSection = (section) => {
+        console.log("section", section)
         setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
     };
 
@@ -235,7 +236,7 @@ const SidebarFilter = ({ onFilterChange, isOpen, toggleSidebar }) => {
                     </FilterSection>
 
                     {/* Color Filter */}
-                    <FilterSection
+                    {/* <FilterSection
                         title="Color"
                         isOpen={openSections.color}
                         onToggle={() => toggleSection("color")}
@@ -243,13 +244,33 @@ const SidebarFilter = ({ onFilterChange, isOpen, toggleSidebar }) => {
                         <div className="space-y-2">
                             {[
                                 "All Colors",
-                                "Black",
-                                "White",
+                                "Pista Gold",
+                                "Indigo Snow",
+                                "Rust Ivory",
+                                "Charcoal Grey",
+                                "Grey Ivory",
+                                "Rusty Grey",
+                                "Brown",
+                                "Natural Grey",
+                                "Brown Grey",
+                                "Beige Ivory",
+                                "Anthracite",
+                                "Black Wine",
+                                "Gold",
+                                "Peach",
+                                "Natural Beige",
+                                "Red Blue",
                                 "Red",
-                                "Blue",
-                                "Green",
-                                "Yellow",
-                                "Pink",
+                                "Wine",
+                                // "Brown Gold",
+                                // "Blue Gold",
+                                // "New Pink",
+                                // "New Aqua",
+                                // "Ivory Multi",
+                                // "Indigo",
+                                // "Grey Natural",
+                                // "Ivory Natural",
+                                // "indigo snow",
                             ].map((colorOption) => (
                                 <label
                                     key={colorOption}
@@ -291,7 +312,7 @@ const SidebarFilter = ({ onFilterChange, isOpen, toggleSidebar }) => {
                                 </label>
                             ))}
                         </div>
-                    </FilterSection>
+                    </FilterSection> */}
 
                     {/* Size Filter Section */}
                     <FilterSection
@@ -303,11 +324,16 @@ const SidebarFilter = ({ onFilterChange, isOpen, toggleSidebar }) => {
                         <div className="space-y-2">
                             {[
                                 "All Size",
+                                "1.5x2 ft",
+                                "2x2 ft",
+                                "2x3 ft",
+                                "2.5x4 ft",
                                 "3x5 ft",
                                 "4x6 ft",
                                 "5x8 ft",
                                 "6x9 ft",
                                 "8x10 ft",
+                                "8x11 ft",
                                 "others"
                             ].map((sizeOption) => (
                                 <label
@@ -343,7 +369,7 @@ const SidebarFilter = ({ onFilterChange, isOpen, toggleSidebar }) => {
                     </FilterSection>
 
                     {/* STyle Filter */}
-                    <FilterSection
+                    {/* <FilterSection
                         title="Style"
                         isOpen={openSections.style}
                         onToggle={() => toggleSection("style")}
@@ -357,7 +383,8 @@ const SidebarFilter = ({ onFilterChange, isOpen, toggleSidebar }) => {
                                 "Persian",
                                 "Traditional",
                                 "Contemporary",
-
+                                "Rectangle",
+                                "Square",
                             ].map((styleOption) => (
                                 <label
                                     key={styleOption}
@@ -389,11 +416,11 @@ const SidebarFilter = ({ onFilterChange, isOpen, toggleSidebar }) => {
                                 </label>
                             ))}
                         </div>
-                    </FilterSection>
+                    </FilterSection> */}
 
                     {/* Texture  */}
                     {/* STyle Filter */}
-                    <FilterSection
+                    {/* <FilterSection
                         title="Texture"
                         isOpen={openSections.texture}
                         onToggle={() => toggleSection("texture")}
@@ -439,7 +466,7 @@ const SidebarFilter = ({ onFilterChange, isOpen, toggleSidebar }) => {
                                 </label>
                             ))}
                         </div>
-                    </FilterSection>
+                    </FilterSection> */}
                 </div>
 
                 {/* Action Buttons */}

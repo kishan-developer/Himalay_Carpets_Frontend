@@ -266,7 +266,7 @@ function EmptyCart() {
             </p>
 
             <Link
-                to={'/products/all/685a6381e6c33dcf91fa54d0'}
+                to={'/products/all/696b32fa0d9bad1460f6e065'}
                 className="bg-foreground text-white px-4 py-2 text-xs sm:text-sm uppercase"
             >
                 Continue Shopping

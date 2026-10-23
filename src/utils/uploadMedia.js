@@ -13,7 +13,7 @@ const uploadMedia = async (files, data) => {
     formData.append("name", data.name);
 
     try {
-        console.log("formData ------------- ", formData);
+        // console.log("formData ------------- ", formData);
         const res = await axiosInstance.post("/upload", formData);
         return res.data?.data;
     } catch (err) {

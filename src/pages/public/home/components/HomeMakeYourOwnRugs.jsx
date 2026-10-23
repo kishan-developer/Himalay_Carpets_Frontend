@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Image from '../../../../assets/images/Hom/HomeMakeYourOwnRugs/CustomRugs.webp'
 function HomeMakeYourOwnRugs() {
     return (
-        <div className="container mx-auto px-4 py-5 md:py-10 max-w-7xl">
+        <div className="container mx-auto px-4 py-5 md:py-10 max-w-7xl" id='custom_rugs'>
             <div className="flex flex-col md:flex-row items-center justify-center gap-6 bg-cream rounded-lg  md:p-10">
                 {/* Image Section - Left on desktop, top on mobile */}
                 <div className="md:w-1/2 w-full flex justify-center">

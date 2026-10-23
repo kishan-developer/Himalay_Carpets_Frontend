@@ -11,16 +11,16 @@ function HomeTeam() {
         },
         {
             name: "Mr. Suryansh Jaisawal",
-            role: "Sales & Client Relations",
+            role: "Operations & Office Management",
             description:
-                "Dedicated to building strong client relationships and expanding the global outreach of the company.",
+                "Oversees core operations, ensuring smooth coordination, efficiency, and excellence in daily business processes.",
             image: "https://placehold.co/150x150/F0E6D8/5A4B40?text=Suryansh",
         },
         {
             name: "Ms. Varnika Jaisawal",
-            role: "Operations & Office Management",
+            role: "Sales & Client Relations",
             description:
-                "Oversees core operations, ensuring smooth coordination, efficiency, and excellence in daily business processes.",
+                "Dedicated to building strong client relationships and expanding the global outreach of the company.",
             image: "https://placehold.co/150x150/F0E6D8/5A4B40?text=Varnika",
         },
     ];
@@ -40,11 +40,11 @@ function HomeTeam() {
                             key={index}
                             className="flex flex-col items-center p-4 rounded-md bg-white shadow-md hover:shadow-lg transition-shadow duration-300"
                         >
-                            <img
+                            {/* <img
                                 src={member.image}
                                 alt={member.name}
                                 className="w-32 h-32 rounded-full object-cover mb-4"
-                            />
+                            /> */}
                             <h3 className="font-semibold text-xl text-foreground mb-1">
                                 {member.name}
                             </h3>

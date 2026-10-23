@@ -82,14 +82,10 @@ function Header() {
             path: "/product",
             subLinks: optimisedCategoriesList,
         },
-        // {
-        //     title: "Collection",
-        //     path: "/collection",
-        //     subLinks: optimisedFabricsLinks,
-        // },
-        { title: "Gallery", path: "/gallery " },
+        { title: "Events", path: "/events " },
+      
+        
         { title: "About Us ", path: "/about" }
-        // { title: "Contact", path: "/contact" },
     ];
 
     // State for sidebars & mobile menu
@@ -245,7 +241,7 @@ function Header() {
                         animate="visible"
                         exit="hidden"
                         variants={headerVariants}
-                        className="fixed top-[40px] left-0 right-0 z-50 bg-white text-foreground px-4 sm:px-10 h-20 shadow border-b border-gray-300 flex items-center justify-between"
+                        className="fixed top-[40px] left-0 right-0 z-50 bg-white text-foreground px-4 sm:px-10 h-25 shadow border-b border-gray-300 flex items-center justify-between"
                     >
                         {/* Desktop Nav (md and up) */}
                         <nav className="hidden md:flex gap-6 text-foreground font-medium text-sm lg:text-[14px] tracking-wide uppercase">
@@ -315,6 +311,8 @@ function Header() {
                                     )}
                                 </div>
                             ))}
+
+                            <a href="/#custom_rugs">Custom Rug</a>
                         </nav>
 
                         {/* Logo */}
@@ -322,7 +320,7 @@ function Header() {
                             <img
                                 src={LOGO}
                                 alt="Himalaya carpets Fab Logo"
-                                className="h-12 sm:h-16 w-auto object-contain"
+                                className="h-12 sm:h-22 w-auto object-contain"
                             />
                         </Link>
 
@@ -529,7 +527,7 @@ function Header() {
                                                     <svg
                                                         className={`w-4 h-4 transition-transform duration-300 ${openSubmenu === link.title
                                                             ? "rotate-180"
-                                                            : ""
+                                                            : ".."
                                                             }`}
                                                         fill="none"
                                                         stroke="currentColor"
@@ -571,6 +569,7 @@ function Header() {
                                     </div>
                                 ))}
 
+                                <a href="/#custom_rugs">Custom Rug</a>
                                 {/* Divider */}
                                 <div className="mt-4 border-t border-gray-200"></div>
 
